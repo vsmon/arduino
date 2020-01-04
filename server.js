@@ -8,7 +8,7 @@ app.use(cors());
 
 let statusList = [];
 
-let switchCommand = "off";
+let switchCommand = statusList[statusList.length - 1];
 
 app.post("/temperatura", (req, res) => {
   const { status } = req.body;
@@ -18,12 +18,10 @@ app.post("/temperatura", (req, res) => {
     date: new Date()
   };
   statusList.push(data);
-  //console.log(statusList);
   res.json(data);
 });
 
 app.get("/temperatura", (req, res) => {
-  //const stat = statusList[statusList.length - 1].status;
   return res.json(statusList);
 });
 
@@ -42,4 +40,4 @@ app.post("/switch", (req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(3000, console.log("Executando..."));
+app.listen(3000, console.log("Executando na porta 3000"));

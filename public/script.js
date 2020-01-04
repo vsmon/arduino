@@ -3,7 +3,7 @@ async function postData() {
     const result = await axios({
       headers: { "Content-Type": "application/json" },
       method: "POST",
-      url: "http://localhost:3000/switch",
+      url: "/switch",
       data: {
         command: "on/off"
       }
@@ -15,7 +15,7 @@ async function postData() {
 
 async function getData() {
   try {
-    const result = await axios.get("http://localhost:3000/temperatura");
+    const result = await axios.get("/temperatura");
     const { data } = result;
     document.getElementById("texto").innerText = `STATUS LED: ${
       data[data.length - 1].status
