@@ -1,24 +1,45 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const app = express();
 
+app.use(express.static("public"));
+app.use(express.json());
+app.use(cors());
 
+let statusList = [];
 
-app.use(express.json())
-app.use(cors())
+let switchCommand = "off";
 
-let temp = []
+app.post("/temperatura", (req, res) => {
+  const { status } = req.body;
 
-app.post('/temperatura', (req, res) => {
-    //console.log(req.body)
-    const {temperatura} = req.body
-    temp.push(temperatura)
+  const data = {
+    status,
+    date: new Date()
+  };
+  statusList.push(data);
+  //console.log(statusList);
+  res.json(data);
+});
 
-    res.json(temp)
-})
+app.get("/temperatura", (req, res) => {
+  //const stat = statusList[statusList.length - 1].status;
+  return res.json(statusList);
+});
 
-app.get('/temperatura', (req, res) => {
-    return res.json(temp)
-})
+app.get("/command", (req, res) => {
+  res.json({ command: switchCommand });
+});
 
-app.listen(3000, console.log('Executando...'))
+app.post("/switch", (req, res) => {
+  const status = statusList[statusList.length - 1].status;
+  if (status == true) {
+    switchCommand = "off";
+  } else {
+    switchCommand = "on";
+  }
+
+  res.json({ ok: true });
+});
+
+app.listen(3000, console.log("Executando..."));
