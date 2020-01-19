@@ -1,30 +1,28 @@
 /* import axios from 'axios' */
 
 function myFunction() {
-  setInterval(postData, 10000);
+  setInterval(postData, 2000);
 }
 
 async function postData() {
-  const temperatura = Math.floor(Math.random() * 100);
+  /* const temperatura = Math.floor(Math.random() * 100);
   const result = await axios({
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    url: "http://localhost:3000/temperatura",
+    url: "http://localhost:3000/temperature",
     data: {
       temperatura
     }
-  });
+  }); */
 
-  const getTemp = await axios.get("http://localhost:3000/temperatura");
+  const response = await axios.get("http://localhost:3000/temperature");
+  console.log(response);
+  document.getElementById(
+    "temperature"
+  ).innerHTML = `TEMP: ${response.data.temperature} ºC`;
 
-  document.getElementById("texto").innerHTML = `TEMP: ${
-    getTemp.data[getTemp.data.length - 1]
-  } ºC`;
-
-  myChart.data.labels.push(getTemp.data[getTemp.data.length - 1] + "ºC");
-  myChart.data.datasets.map(item =>
-    item.data.push(getTemp.data[getTemp.data.length - 1])
-  );
+  myChart.data.labels.push(response.data.temperature + "ºC");
+  myChart.data.datasets.map(item => item.data.push(response.data.temperature));
   myChart.update();
 }
 

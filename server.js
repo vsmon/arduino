@@ -6,22 +6,24 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
 
-let statusList = [];
+let statusList = "";
 
-let switchCommand = statusList[statusList.length - 1];
+let switchCommand = "";
 
-app.post("/temperatura", (req, res) => {
-  const { status } = req.body;
+app.post("/temperature", (req, res) => {
+  const { temperature, humidity, status_led } = req.body;
 
   const data = {
-    status,
+    temperature,
+    humidity,
+    status_led,
     date: new Date()
   };
-  statusList.push(data);
+  statusList = data;
   res.json(data);
 });
 
-app.get("/temperatura", (req, res) => {
+app.get("/temperature", (req, res) => {
   return res.json(statusList);
 });
 
@@ -30,8 +32,9 @@ app.get("/command", (req, res) => {
 });
 
 app.post("/switch", (req, res) => {
-  const status = statusList[statusList.length - 1].status;
-  if (status == true) {
+  const status_led = statusList.status_led;
+
+  if (status_led == true) {
     switchCommand = "off";
   } else {
     switchCommand = "on";
