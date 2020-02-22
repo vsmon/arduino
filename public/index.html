@@ -8,21 +8,37 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+    <style>
+        .main{
+			max-width:1300px;
+			margin:0 auto;
+            margin-left:0px;
+			overflow:hidden;
+			background:lightgray;
+		}
+        .content{
+            margin-left:0px;
+			float: left;;
+			width:100%;
+			margin-right:-210px;
+		}
+    </style>
 </head>
 <body>
+    <div class="main">
+        <div class="content">
+            <h1 id='temperature'>Temperature:</h1>
+            <h1 id='humidity'>Humidity:</h1>
+            <h1 id='pressure'>Pressure:</h1>
+            <h1 id='altitude'>Altitude:</h1>
+            <button onclick="postData()">LED</button>
+            
+            <h1 id='led'>LED:</h1>
+            <div id="chart_div" style="width: 800px; height: 820px;"></div>
+            
+            <script src="script.js"></script>
+        </div>
         
-        <h1 id='temperature'>Temperature:</h1>
-        <h1 id='humidity'>Humidity:</h1>
-        <button onclick="postData()">LED</button>
-        <button onclick="getData()">STATUS</button>
-        
-        <!-- <div>
-            <canvas id="myChart" width="300" height="100"></canvas>
-        </div> -->
-        <div id="chart_div" style="width: 800px; height: 820px;"></div>
-        
-        <script src="script.js"></script>
-                        
+    </div>    
 </body>
 </html>

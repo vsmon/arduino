@@ -19,16 +19,27 @@ async function getData() {
     const response = await axios.get("/temperature");
     const { data } = response;
 
+    const pressureHpa = data.pressure / 100;
+    const statusLed = data.status_led ? "ON" : "OFF";
+
+    temperature = data.temperature.toFixed(2);
+    humidity = data.humidity.toFixed(2);
+    pressure = pressureHpa.toFixed(2);
+    altitude = data.altitude.toFixed(2);
+
     document.getElementById(
       "temperature"
-    ).innerText = `Temperature: ${data.temperature}ºC`;
+    ).innerText = `Temperature: ${temperature} ºC`;
+
+    document.getElementById("humidity").innerText = `Humidity: ${humidity} %`;
+
+    document.getElementById("pressure").innerText = `Pressure: ${pressure} hPa`;
 
     document.getElementById(
-      "humidity"
-    ).innerText = `Humidity: ${data.humidity}%`;
+      "altitude"
+    ).innerText = `Altitude: ${altitude} m (Metros)`;
 
-    temperature = data.temperature;
-    humidity = data.humidity;
+    document.getElementById("led").innerText = `LED: ${statusLed}`;
 
     /* myChart.data.labels.push(
       response.data.temperature + "ºC",
@@ -59,11 +70,13 @@ function drawChart() {
   var data = google.visualization.arrayToDataTable([
     ["Label", "Value"],
     ["Temperature", 80],
-    ["Humidity", 55]
+    ["Humidity", 55],
+    ["Pressure", 55],
+    ["Altitude", 55]
   ]);
 
   var options = {
-    width: 400,
+    width: 380,
     height: 520,
     redFrom: 90,
     redTo: 100,
@@ -85,6 +98,14 @@ function drawChart() {
   }, 1000);
   setInterval(function() {
     data.setValue(1, 1, humidity);
+    chart.draw(data, options);
+  }, 1000);
+  setInterval(function() {
+    data.setValue(2, 1, pressure);
+    chart.draw(data, options);
+  }, 1000);
+  setInterval(function() {
+    data.setValue(3, 1, altitude);
     chart.draw(data, options);
   }, 1000);
 }

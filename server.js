@@ -11,11 +11,13 @@ let statusList = "";
 let switchCommand = "";
 
 app.post("/temperature", (req, res) => {
-  const { temperature, humidity, status_led } = req.body;
+  const { temperature, humidity, pressure, altitude, status_led } = req.body;
 
   const data = {
     temperature,
     humidity,
+    pressure,
+    altitude,
     status_led,
     date: new Date()
   };
